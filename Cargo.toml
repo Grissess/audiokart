@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["Graham Northup <grissess@nexusg.org>", "cmr <me@cmr.af>"]
 
 [dependencies]
+amethyst = "0.7.0"
+rustfft = "2.1.0"
