@@ -7,7 +7,7 @@ use std::time::Duration;
 use std::convert::Into;
 
 use cpal::Sample;
-use rustfft::num_complex::Complex;
+pub use rustfft::num_complex::Complex;
 use itertools::Itertools;
 
 #[derive(Clone,Copy,Debug)]
@@ -63,7 +63,7 @@ pub trait AnalysisListener {
 
     fn beat(&mut self, _time: Timecode, _window_info: Option<BeatInfo>, _band_info: &[Option<BeatInfo>]) {}
 
-    fn window(&mut self, _time: Timecode, _info: WindowInfo) {}
+    fn window(&mut self, _time: Timecode, _info: WindowInfo, _spectrum: &[Complex<f32>]) {}
 }
 
 impl Analyzer {
@@ -145,7 +145,7 @@ impl Analyzer {
                 listener.beat(tc, main_beat, &band_states);
             }
 
-            listener.window(tc, WindowInfo { energy: energy });
+            listener.window(tc, WindowInfo { energy: energy }, &spectrum);
         }
 
         listener.stop(Timecode { sample: sample_counter, sample_rate: rate});

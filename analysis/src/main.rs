@@ -5,7 +5,7 @@ extern crate rodio;
 use std::fs::File;
 use std::io::BufReader;
 use std::time::{Duration, Instant};
-use analysis::{Timecode, BeatInfo, WindowInfo};
+use analysis::{Timecode, BeatInfo, WindowInfo, Complex};
 use rodio::Source;
 
 fn dur_to_frac(d: Duration) -> f64 {
@@ -64,7 +64,7 @@ impl analysis::AnalysisListener for DebugListener {
         self.0.push(Event { time: time.into(), data: EventData::Beat(master.is_some(), bands.iter().map(Option::is_some).collect()) });
     }
 
-    fn window(&mut self, time: Timecode, info: WindowInfo) {}
+    fn window(&mut self, time: Timecode, info: WindowInfo, spectrum: &[Complex<f32>]) {}
 }
 
 fn main() {
